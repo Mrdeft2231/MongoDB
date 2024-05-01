@@ -5,6 +5,17 @@ const findAllCategories = async (req, res, next) => {
   next();
 }
 
+const findCategoryById = async (req, res, next) => {
+  console.log("GET /categories/:id");
+  try {
+    req.game = await game.findById(req.params.id)
+    next();
+  } catch (error) {
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({ meesage: "Не удалось найти категорию" }));
+  }
+}
+
 const createCategory = async (req, res, next) => {
   console.log("POOST /categories")
   try {
@@ -19,5 +30,6 @@ const createCategory = async (req, res, next) => {
 
 module.exports = {
   findAllCategories,
-  createCategory
+  createCategory,
+  findCategoryById
 };
