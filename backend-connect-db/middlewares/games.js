@@ -5,6 +5,15 @@ const findAllGames = async (req, res, next) => {
   next()
 }
 
+const findGameById = async (req, res, next) => {
+  try {
+
+  } catch {
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({ message: "Не удалось найти игру" }));
+  }
+}
+
 const createGame = async (req, res, next) => {
   console.log("POOST /games")
   try {
