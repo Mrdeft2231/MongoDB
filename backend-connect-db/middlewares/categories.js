@@ -5,4 +5,19 @@ const findAllCategories = async (req, res, next) => {
   next();
 }
 
-module.exports = findAllCategories;
+const createCategory = async (req, res, next) => {
+  console.log("POOST /categories")
+  try {
+    console.log(req.body)
+    req.game = await categories.create(req.body);
+    next();
+  } catch (error) {
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({ message: "Не удалось создать категорию" }));
+  }
+}
+
+module.exports = {
+  findAllCategories,
+  createCategory
+};
