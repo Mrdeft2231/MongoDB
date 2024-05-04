@@ -1,4 +1,5 @@
 
+const user = require("../models/user");
 const users = require("../models/user");
 
 const findAllUsers = async (req, res, next) => {
@@ -30,10 +31,35 @@ const findUserById = async (req, res, next) => {
   }
 }
 
+const updateUser = async (req, res, next) => {
+  try {
+    req.user = await users.findByIdAndUpdate(req.params.id, req.body);
+    next()
+  } catch (error) {
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({ message: "не удалось обновить пользователя" }))
+    
+  }
+}
+
+const deleteUser = async (req, res, next) => {
+  try {
+    req.user = await users.findByIdAndDelete(req.params.id);
+    next();
+  } catch {
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({ message: "не удалось удалить пользователя" }))
+  }
+}
+
+
+
 module.exports = {
   findAllUsers,
   createUser,
-  findUserById
+  findUserById,
+  updateUser,
+  deleteUser
 };
 
 // Проблема в роуте
