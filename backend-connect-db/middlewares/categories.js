@@ -66,10 +66,10 @@ const checkIsCategoryExists = async (req, res, next) => {
 }
 
 const checkEmptyName = async (req, res, next) => {
-  if (!req.body.name) {
+  if (!req.body.categories || req.body.categories.length === 0) {
     res.setHeader("Content-Type", "aplication/json");
-    res.status(400).send(JSON.stringify({ message: "Данные не корректны" }));
-  } {
+    res.status(400).send(JSON.stringify({ message: "Данные пустые" }));
+  } else {
     next();
   }
 }

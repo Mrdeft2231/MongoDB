@@ -52,6 +52,27 @@ const deleteUser = async (req, res, next) => {
   }
 }
 
+const checkEmptyNameAndEmailAndPassword = async (req, res, next) => {
+  if (!req.body.username ||
+      !req.body.email ||
+      !req.body.password
+   ) {
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({ message: "Одно из полей не заполнено" }))
+   } else {
+    next();
+   }
+}
+
+const checkEmptyNameAndEmail = async (req, res, next) => {
+  if (!req.body.username || !req.body.email) {
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({ message: "Одно из полей при обновлении не заполнено" }))
+  } else {
+    next();
+  }
+}
+
 
 
 module.exports = {
@@ -59,7 +80,9 @@ module.exports = {
   createUser,
   findUserById,
   updateUser,
-  deleteUser
+  deleteUser,
+  checkEmptyNameAndEmailAndPassword,
+  checkEmptyNameAndEmail
 };
 
 // Проблема в роуте
