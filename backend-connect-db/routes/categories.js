@@ -17,10 +17,14 @@ const {
   sendCategoryDelete
 } = require("../controllers/categories");
 
+const {
+  checkAuth
+} = require("../middlewares/auth")
+
 categoriesRouter.get("/categories", findAllCategories, sendAllCategories);
-categoriesRouter.post("/categories", findAllCategories, checkIsCategoryExists, createCategory, sendCategoryCreated);
+categoriesRouter.post("/categories", findAllCategories, checkIsCategoryExists, checkEmptyName, checkAuth, createCategory, sendCategoryCreated);
 categoriesRouter.get("/categories/:id", findCategoryById, sendCategoryById);
-categoriesRouter.put("/categories/:id", findCategoryById, checkEmptyName, updateCategory, sendCategoryUpdated);
-categoriesRouter.delete("/categories/:id", deleteCategory, sendCategoryDelete);
+categoriesRouter.put("/categories/:id", findCategoryById, checkEmptyName, checkAuth, updateCategory, sendCategoryUpdated);
+categoriesRouter.delete("/categories/:id", checkAuth, deleteCategory, sendCategoryDelete);
 
 module.exports = categoriesRouter;
