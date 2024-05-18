@@ -1,5 +1,4 @@
 
-const category = require("../models/category");
 const categories = require("../models/category");
 
 const findAllCategories = async (req, res, next) => {
@@ -53,7 +52,7 @@ const deleteCategory = async (req, res, next) => {
 const checkIsCategoryExists = async (req, res, next) => {
 
   const isInArray = req.categoriesArray.find((category) => {
-    return req.body.name === category.name
+    return req.body.name === categories.name
   });
 
   if (isInArray) {
