@@ -2,11 +2,11 @@ const game = require("../models/game");
 
 const findAllGames = async (req, res, next) => {
 
-  // if(req.query["categories.name"]) {
-  //   req.gameArray = await game.findByCategories(req.query["categories.name"]);
-  //   next();
-  //   return;
-  // }
+  if(req.query["categories.name"]) {
+    req.gameArray = await game.findByCategories(req.query["categories.name"]);
+    next();
+    return;
+  }
 
   req.gamesArray = await game
   .find({})
