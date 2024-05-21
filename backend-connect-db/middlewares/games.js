@@ -63,39 +63,35 @@ const deleteGame = async (req, res, next) => {
 }
 
 const checkEmptyFields = async (req, res, next) => {
-  // if (
-  //   !req.body.description ||
-  //   !req.body.image ||
-  //   !req.body.link ||
-  //   !req.body.developer
-  // ) {
-  //   res.setHeader("Content-Type", "aplication/json");
-  //   res.status(400).send(JSON.stringify({ message: "Одно из полей пустое. Заполните все поля" }))
-  // } else {
-  //   next();
-  // }
   if (req.isVoteRequest) {
     next();
     return
-  } else {
+  }
+  if (
+    !req.body.description ||
+    !req.body.image ||
+    !req.body.link ||
+    !req.body.developer
+  ) {
     res.setHeader("Content-Type", "aplication/json");
     res.status(400).send(JSON.stringify({ message: "Одно из полей пустое. Заполните все поля" }))
+  } else {
+    next();
   }
 };
 
+
 const checkIfCategoriesAvaliable = async (req, res, next) => {
-  // if (!req.body.categories || req.body.categories.length === 0) {
-  //   res.setHeader("Content-Type", "aplication/json");
-  //   res.status(400).send(JSON.stringify({ message: "Заполните категорию" }));
-  // } else {
-  //   next();
-  // }
   if (req.isVoteRequest) {
     next();
     return
-  } else {
+  }
+  
+  if (!req.body.categories || req.body.categories.length === 0) {
     res.setHeader("Content-Type", "aplication/json");
-    res.status(400).send(JSON.stringify({ message: "Одно из полей пустое. Заполните все поля" }))
+    res.status(400).send(JSON.stringify({ message: "Заполните категорию" }));
+  } else {
+    next();
   }
 }
 
