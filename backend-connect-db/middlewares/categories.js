@@ -1,4 +1,5 @@
 
+const category = require("../models/category");
 const categories = require("../models/category");
 
 const findAllCategories = async (req, res, next) => {
@@ -17,7 +18,7 @@ const findCategoryById = async (req, res, next) => {
 }
 
 const createCategory = async (req, res, next) => {
-  console.log("POOST /categories")
+  console.log("POST /categories")
   try {
     console.log(req.body)
     req.categories = await categories.create(req.body);
@@ -51,8 +52,8 @@ const deleteCategory = async (req, res, next) => {
 
 const checkIsCategoryExists = async (req, res, next) => {
 
-  const isInArray = req.categoriesArray.find((category) => {
-    return req.body.name === category.name
+  const isInArray = req.categoriesArray.find((categories) => {
+    return req.body.name === categories.name
   });
 
   if (isInArray) {
@@ -65,7 +66,7 @@ const checkIsCategoryExists = async (req, res, next) => {
 }
 
 const checkEmptyName = async (req, res, next) => {
-  if (!req.body.categories || req.body.categories.length === 0) {
+  if (!req.body.name || req.body.name.length === 0) {
     res.setHeader("Content-Type", "aplication/json");
     res.status(400).send(JSON.stringify({ message: "Данные пустые" }));
   } else {

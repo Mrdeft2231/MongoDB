@@ -44,6 +44,7 @@ const createGame = async (req, res, next) => {
 
 const updateGame = async (req, res, next) => {
   try {
+    console.log("Отработал")
     req.game = await game.findByIdAndUpdate(req.params.id, req.body)
     next();
   } catch (error) {
@@ -111,12 +112,12 @@ const checkIfUsersAreSafe = async (req, res, next) => {
 
 const checkIsGameExists = async (req, res, next) => {
   const isInArray = req.gamesArray.find((game) => {
-    return req.body.name === game.name
+    return req.body.name === game.title
   });
 
   if (isInArray) {
     res.setHeader("Content-Type", "aplication/json");
-    res.status(400).send(JSON.stringify({ message: "Категория с таким названием уже существует" }));
+    res.status(400).send(JSON.stringify({ message: "игра с таким названием уже существует" }));
   } else {
     next();
   }
